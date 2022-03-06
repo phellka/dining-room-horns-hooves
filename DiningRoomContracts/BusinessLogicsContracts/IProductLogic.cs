@@ -12,6 +12,6 @@ namespace DiningRoomContracts.BusinessLogicsContracts
     {
         List<ProductViewModel> Read(ProductBindingModel model);
         void Create(ProductBindingModel model);
-        void AddCooks(Dictionary<int, string> addedCooks);
+        void AddCooks((int, List<int>) addedCooks);
     }
 }

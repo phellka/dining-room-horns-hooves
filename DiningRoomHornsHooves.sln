@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiningRoomHornsHooves", "Di
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiningRoomContracts", "DiningRoomContracts\DiningRoomContracts.csproj", "{70B6F76A-C007-4A18-A6C4-CBAB1B611DF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiningRoomBusinessLogic", "DiningRoomBusinessLogic\DiningRoomBusinessLogic.csproj", "{5224C680-733B-43AD-AD71-AC1EE42EAB9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{70B6F76A-C007-4A18-A6C4-CBAB1B611DF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70B6F76A-C007-4A18-A6C4-CBAB1B611DF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70B6F76A-C007-4A18-A6C4-CBAB1B611DF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5224C680-733B-43AD-AD71-AC1EE42EAB9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5224C680-733B-43AD-AD71-AC1EE42EAB9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5224C680-733B-43AD-AD71-AC1EE42EAB9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5224C680-733B-43AD-AD71-AC1EE42EAB9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
