@@ -11,6 +11,6 @@ namespace DiningRoomContracts.BusinessLogicsContracts
     public interface ICookLogic
     {
         List<CookViewModel> Read(CookBindingModel model);
-        void Create(CookBindingModel model);
+        void Create();
     }
 }

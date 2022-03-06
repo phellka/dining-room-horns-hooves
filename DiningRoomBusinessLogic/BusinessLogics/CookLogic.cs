@@ -29,9 +29,9 @@ namespace DiningRoomBusinessLogic.BusinessLogics
             }
             return cookStorage.GetFilteredList(model);
         }
-        public void Create(CookBindingModel model)
+        public void Create()
         {
-            cookStorage.Insert(model);
+            cookStorage.Insert();
         }
     }
 }

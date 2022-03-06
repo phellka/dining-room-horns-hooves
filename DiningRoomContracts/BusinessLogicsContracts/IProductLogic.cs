@@ -11,7 +11,7 @@ namespace DiningRoomContracts.BusinessLogicsContracts
     public interface IProductLogic
     {
         List<ProductViewModel> Read(ProductBindingModel model);
-        void Create(ProductBindingModel model);
-        void AddCooks((int, List<int>) addedCooks);
+        void Create();
+        void AddCooks();
     }
 }

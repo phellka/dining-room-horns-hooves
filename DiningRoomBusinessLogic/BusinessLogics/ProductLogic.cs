@@ -31,18 +31,13 @@ namespace DiningRoomBusinessLogic.BusinessLogics
             }
             return productStorage.GetFilteredList(model);
         }
-        public void Create(ProductBindingModel model)
+        public void Create()
         {
-            productStorage.Insert(model);
+            productStorage.Insert();
         }
-        public void AddCooks((int, List<int>) addedCooks)
+        public void AddCooks()
         {
-            var product = productStorage.GetElement(new ProductBindingModel { Id = addedCooks.Item1 });
-            if (product == null)
-            {
-                throw new Exception("Продукт не найден");
-            }
-            productStorage.AddCooks(addedCooks);
+            productStorage.AddCooks();
         }
     }
 }

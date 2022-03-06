@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DiningRoomContracts.ViewModels
+namespace DiningRoomDatabaseImplement.Models
 {
-    public class CutleryViewModel
+    public class Cutlery
     {
         public int Id { get; set; }
-        [DisplayName("Название столового прибора")]
+        [Required]
         public String Name { get; set; }
-        [DisplayName("Количество приборов")]
+        [Required]
         public int Count { get; set; }
         public String WorkerLogin { get; set; }
-        public int CulteryOrder { get; set; }
+        public int OrderId { get; set; }
+        public virtual Order Order { get; set; }
     }
 }
