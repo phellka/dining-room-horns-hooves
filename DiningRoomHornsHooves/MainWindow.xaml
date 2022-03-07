@@ -7,6 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Menu Height="25" VerticalAlignment="Top">
+            <MenuItem Header="Обеды"></MenuItem>
+            <MenuItem Header="Заказы" Click="OrdersClick"></MenuItem>
+            <MenuItem Header="Приборы"></MenuItem>
+            <MenuItem Header="Получение списка"></MenuItem>
+            <MenuItem Header="Отчет"></MenuItem>
+            <MenuItem Header="Прочее">
+                <MenuItem Header="Создание повара" Click="CreateCookClick"></MenuItem>
+                <MenuItem Header="Создание продукта" Click="CreateProductClick"></MenuItem>
+                <MenuItem Header="Привязать поваров" Click="CreateProductCooksClick"></MenuItem>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>

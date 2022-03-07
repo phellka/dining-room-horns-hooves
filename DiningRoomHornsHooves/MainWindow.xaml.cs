@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DiningRoomBusinessLogic.BusinessLogics;
+using DiningRoomDatabaseImplement.Implements;
 
 namespace DiningRoomHornsHooves
 {
@@ -20,9 +22,28 @@ namespace DiningRoomHornsHooves
     /// </summary>
     public partial class MainWindow : Window
     {
+        CookLogic cookLogic = new CookLogic(new CookStorage());
+        ProductLogic productLogic = new ProductLogic(new ProductStorage(), new CookStorage());
         public MainWindow()
         {
             InitializeComponent();
+        }
+        private void CreateCookClick(object sender, RoutedEventArgs e)
+        {
+            cookLogic.Create();
+        }
+        private void CreateProductClick(object sender, RoutedEventArgs e)
+        {
+            productLogic.Create();
+        }
+        private void CreateProductCooksClick(object sender, RoutedEventArgs e)
+        {
+            productLogic.AddCooks();
+        }
+        private void OrdersClick(object sender, RoutedEventArgs e)
+        {
+            OrdersWindow ordersWindow = new OrdersWindow();
+            ordersWindow.ShowDialog();
         }
     }
 }

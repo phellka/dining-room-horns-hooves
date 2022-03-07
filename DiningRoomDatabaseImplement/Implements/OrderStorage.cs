@@ -73,7 +73,7 @@ namespace DiningRoomDatabaseImplement.Implements
         {
             order.Calorie = model.Calorie;
             order.Wishes = model.Wishes;
-            order.WorkerLogin = model.WorkerLogin;
+            order.WorkerLogin = WorkerStorage.AutorizedWorker;
             return order;
         }
         private static OrderViewModel CreateModel(Order order)

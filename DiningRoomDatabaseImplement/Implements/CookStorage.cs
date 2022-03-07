@@ -40,7 +40,12 @@ namespace DiningRoomDatabaseImplement.Implements
         public void Insert()
         {
             using var context = new DiningRoomDatabase();
-            context.Cooks.Add(new Cook { Name = GenerateName(), StorekeeperLogin = "SystemStorekeeper"});
+            string newName = GenerateName();
+            while(GetElement(new CookBindingModel { Name = newName }) != null)
+            {
+                newName = GenerateName();
+            }
+            context.Cooks.Add(new Cook { Name = newName, StorekeeperLogin = "SystemStorekeeper"});
             context.SaveChanges();
         }
         private static CookViewModel CreateModel(Cook cook)

@@ -17,6 +17,10 @@ namespace DiningRoomDatabaseImplement.Implements
         public void Insert(WorkerBindingModel model)
         {
             using var context = new DiningRoomDatabase();
+            if (context.Workers.FirstOrDefault(rec => rec.Login == model.Login) != null)
+            {
+                throw new Exception("Пользователь с таким логином уже существует");
+            }
             context.Workers.Add(new Worker { Login = model.Login, Password = model.Password});
             context.SaveChanges();
         }

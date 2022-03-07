@@ -56,7 +56,11 @@ namespace DiningRoomDatabaseImplement.Implements
             int maxLen = rng.Next(context.Cooks.Count());
             for (int i = 0; i < maxLen; ++i)
             {
-                addedCooks.Item2.Add(context.Cooks.ToList()[rng.Next(context.Cooks.Count())].Id);
+                int newCookId = context.Cooks.ToList()[rng.Next(context.Cooks.Count())].Id;
+                if (!addedCooks.Item2.Contains(newCookId))
+                {
+                    addedCooks.Item2.Add(newCookId);
+                }
             }
             using var transaction = context.Database.BeginTransaction();
             try
@@ -64,11 +68,13 @@ namespace DiningRoomDatabaseImplement.Implements
                 Product product = context.Products.FirstOrDefault(rec => rec.Id == addedCooks.Item1);
                 foreach(int cookId in addedCooks.Item2)
                 {
+                    List<ProductCooks> textList = context.ProductCooks.ToList();
                     if (!context.ProductCooks.Where(rec => rec.ProductId == addedCooks.Item1).Select(rec => rec.CookId).ToList().Contains(cookId))
                     {
                         context.ProductCooks.Add(new ProductCooks { ProductId = addedCooks.Item1, CookId = cookId, Method = CookingMethods[rng.Next(100) % 5] });
                     }
                 }
+                transaction.Commit();
                 context.SaveChanges();
             }
             catch
