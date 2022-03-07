@@ -16,7 +16,7 @@ namespace DiningRoomDatabaseImplement.Implements
         public List<OrderViewModel> GetFullList()
         {
             using var context = new DiningRoomDatabase();
-            return context.Orders.Select(CreateModel).ToList();
+            return context.Orders.Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).Select(CreateModel).ToList();
         }
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
         {
@@ -25,7 +25,7 @@ namespace DiningRoomDatabaseImplement.Implements
                 return null;
             }
             using var context = new DiningRoomDatabase();
-            return context.Orders.Where(rec => rec.Calorie == model.Calorie).Select(CreateModel).ToList();
+            return context.Orders.Where(rec => rec.Calorie == model.Calorie && rec.WorkerLogin == WorkerStorage.AutorizedWorker).Select(CreateModel).ToList();
         }
         public OrderViewModel GetElement(OrderBindingModel model)
         {
@@ -34,7 +34,7 @@ namespace DiningRoomDatabaseImplement.Implements
                 return null;
             }
             using var context = new DiningRoomDatabase();
-            var order = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+            var order = context.Orders.Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).FirstOrDefault(rec => rec.Id == model.Id);
             return order != null ? CreateModel(order) : null;
         }
         public void Insert(OrderBindingModel model)
@@ -47,7 +47,7 @@ namespace DiningRoomDatabaseImplement.Implements
         public void Update(OrderBindingModel model)
         {
             using var context = new DiningRoomDatabase();
-            var element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+            var element = context.Orders.Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).FirstOrDefault(rec => rec.Id == model.Id);
             if (element == null)
             {
                 throw new Exception("Элемент не найден");
@@ -58,7 +58,7 @@ namespace DiningRoomDatabaseImplement.Implements
         public void Delete(OrderBindingModel model)
         {
             using var context = new DiningRoomDatabase();
-            Order element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+            Order element = context.Orders.Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).FirstOrDefault(rec => rec.Id == model.Id);
             if (element != null)
             {
                 context.Orders.Remove(element);
