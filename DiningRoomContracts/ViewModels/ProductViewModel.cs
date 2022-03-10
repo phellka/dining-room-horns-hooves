@@ -16,5 +16,10 @@ namespace DiningRoomContracts.ViewModels
         public String Country { get; set; }
         public String StorekeeperLogin { get; set; }
         public Dictionary<int, string> ProductCooks { get; set; }
+        override
+        public string ToString()
+        {
+            return String.Format(@"Id = {0}, Name = {1}, Country = {2}", Id, Name, Country);
+        }
     }
 }

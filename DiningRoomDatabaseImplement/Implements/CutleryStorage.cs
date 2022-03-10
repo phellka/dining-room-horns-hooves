@@ -103,6 +103,7 @@ namespace DiningRoomDatabaseImplement.Implements
         {
             return new CutleryViewModel
             {
+                Id = cutlery.Id,
                 Name = cutlery.Name,
                 Count = cutlery.Count,
                 WorkerLogin = cutlery.WorkerLogin,

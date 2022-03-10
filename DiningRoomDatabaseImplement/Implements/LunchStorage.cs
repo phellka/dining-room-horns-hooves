@@ -16,7 +16,7 @@ namespace DiningRoomDatabaseImplement.Implements
         public List<LunchViewModel> GetFullList()
         {
             using var context = new DiningRoomDatabase();
-            return context.Lunches.Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).Select(CreateModel).ToList();
+            return context.Lunches.Include(rec => rec.LunchProducts).Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).Select(CreateModel).ToList();
         }
         public List<LunchViewModel> GetFilteredList(LunchBindingModel model)
         {
@@ -25,7 +25,7 @@ namespace DiningRoomDatabaseImplement.Implements
                 return null;
             }
             using var context = new DiningRoomDatabase();
-            return context.Lunches.Where(rec => rec.Id == model.Id && rec.WorkerLogin == WorkerStorage.AutorizedWorker).Select(CreateModel).ToList();
+            return context.Lunches.Include(rec => rec.LunchProducts).Where(rec => rec.Id == model.Id && rec.WorkerLogin == WorkerStorage.AutorizedWorker).Select(CreateModel).ToList();
         }
         public LunchViewModel GetElement(LunchBindingModel model)
         {
@@ -34,7 +34,7 @@ namespace DiningRoomDatabaseImplement.Implements
                 return null;
             }
             using var context = new DiningRoomDatabase();
-            var lunch = context.Lunches.Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).FirstOrDefault(rec => rec.Id == model.Id);
+            var lunch = context.Lunches.Include(rec => rec.LunchProducts).Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).FirstOrDefault(rec => rec.Id == model.Id);
             return lunch != null ? CreateModel(lunch) : null;
         }
         public void Insert(LunchBindingModel model)

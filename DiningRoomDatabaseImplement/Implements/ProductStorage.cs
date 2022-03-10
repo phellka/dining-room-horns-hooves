@@ -19,7 +19,8 @@ namespace DiningRoomDatabaseImplement.Implements
         public List<ProductViewModel> GetFullList()
         {
             using var context = new DiningRoomDatabase();
-            return context.Products.Select(CreateModel).ToList();
+            var list = context.Products.ToList();
+            return context.Products.Include(rec => rec.LunchProducts).Include(rec => rec.ProductCooks).Select(CreateModel).ToList();
         }
         public List<ProductViewModel> GetFilteredList(ProductBindingModel model)
         {
@@ -28,7 +29,7 @@ namespace DiningRoomDatabaseImplement.Implements
                 return null;
             }
             using var context = new DiningRoomDatabase();
-            return context.Products.Where(rec => rec.Name.Contains(model.Name)).Select(CreateModel).ToList();
+            return context.Products.Where(rec => rec.Name.Contains(model.Name)).Include(rec => rec.LunchProducts).Include(rec => rec.ProductCooks).Select(CreateModel).ToList();
         }
         public ProductViewModel GetElement(ProductBindingModel model)
         {
@@ -37,7 +38,7 @@ namespace DiningRoomDatabaseImplement.Implements
                 return null;
             }
             using var context = new DiningRoomDatabase();
-            var product = context.Products.FirstOrDefault(rec => rec.Id == model.Id);
+            var product = context.Products.Include(rec => rec.LunchProducts).Include(rec => rec.ProductCooks).FirstOrDefault(rec => rec.Id == model.Id);
             return product != null ? CreateModel(product) : null;
         }
         public void Insert()

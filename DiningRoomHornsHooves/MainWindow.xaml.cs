@@ -45,5 +45,15 @@ namespace DiningRoomHornsHooves
             OrdersWindow ordersWindow = new OrdersWindow();
             ordersWindow.ShowDialog();
         }
+        private void CutleriesClick(object sender, RoutedEventArgs e)
+        {
+            CutleriesWindow cutleriesWindow = new CutleriesWindow();
+            cutleriesWindow.ShowDialog();
+        }
+        private void LunchesClick(object sender, RoutedEventArgs e)
+        {
+            LunchesWindow lunchesWindow = new LunchesWindow();
+            lunchesWindow.ShowDialog();
+        }
     }
 }

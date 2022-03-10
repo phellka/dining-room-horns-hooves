@@ -15,5 +15,10 @@ namespace DiningRoomContracts.ViewModels
         [DisplayName("Пожелания к заказу")]
         public String Wishes { get; set; }
         public string WorkerLogin { get; set; }
+        override
+        public string ToString()
+        {
+            return String.Format(@"Id = {0}, Calorie = {1}, Wishes = {2}", Id, Calorie, Wishes);
+        }
     }
 }

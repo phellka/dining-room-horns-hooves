@@ -1,0 +1,28 @@
+﻿<Window x:Class="DiningRoomHornsHooves.CutleryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiningRoomHornsHooves"
+        mc:Ignorable="d"
+        Title="Столовые приборы" Height="450" Width="800" Loaded="OrderWindowLoad">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">Название</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">Количество</TextBlock>
+        <TextBox Name="NameBox" Grid.Column="1" Grid.Row="0"></TextBox>
+        <TextBox Name="CountBox" Grid.Column="1" Grid.Row="1"></TextBox>
+        <ComboBox Name="OrdersComboBox" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" ></ComboBox>
+        <Button Grid.Column="0" Grid.Row="3" Click="CreateClick">Создать</Button>
+        <Button Grid.Column="1" Grid.Row="3" Click="CancelClick">Отмена</Button>
+    </Grid>
+</Window>
