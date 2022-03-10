@@ -66,9 +66,9 @@ namespace DiningRoomHornsHooves
                 MessageBox.Show("Введите название");
                 return;
             }
-            if (CountBox.Text == "")
+            if (CountBox.Text == "" || !int.TryParse(CountBox.Text, out int number))
             {
-                MessageBox.Show("Введите количество");
+                MessageBox.Show("Введите количество в виде числа");
                 return;
             }
             if (OrdersComboBox.SelectedItem == null)

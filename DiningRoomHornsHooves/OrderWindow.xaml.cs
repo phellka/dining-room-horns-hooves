@@ -55,9 +55,9 @@ namespace DiningRoomHornsHooves
         }
         private void CreateClick(object sender, RoutedEventArgs e)
         {
-            if (CaloriesBox.Text == "")
+            if (CaloriesBox.Text == "" || !int.TryParse(CaloriesBox.Text, out int number))
             {
-                MessageBox.Show("Введите калорийность");
+                MessageBox.Show("Введите калорийность в виде числа");
                 return;
             }
             int calories = Convert.ToInt32(CaloriesBox.Text);

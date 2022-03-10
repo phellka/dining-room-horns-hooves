@@ -15,6 +15,7 @@ using DiningRoomBusinessLogic.BusinessLogics;
 using DiningRoomDatabaseImplement.Implements;
 using DiningRoomContracts.BindingModels;
 using DiningRoomContracts.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace DiningRoomHornsHooves
 {
@@ -36,7 +37,7 @@ namespace DiningRoomHornsHooves
             var list = productLogic.Read(null);
             ReadyListBox.ItemsSource = list;
             ReadyListBox.SelectedItem = null;
-            //OrdersComboBox.DisplayMemberPath = "Calorie";
+            SelectedListBox.SelectedItem = null;
             if (id.HasValue)
             {
                 try
@@ -52,10 +53,12 @@ namespace DiningRoomHornsHooves
                         {
                             CountBox.Text = view.LunchProduts.First().Value.ToString();
                         }
-                        SelectedListBox.ItemsSource = selectedList;
-                        foreach(var i in selectedList)
+                        foreach(ProductViewModel i in ReadyListBox.Items)
                         {
-                            ReadyListBox.Items.Remove(i);
+                            if (selectedList.FirstOrDefault(rec => rec.Id == i.Id) != null)
+                            {
+                                SelectedListBox.Items.Add(i);
+                            }
                         }
                     }
                 }
@@ -71,14 +74,19 @@ namespace DiningRoomHornsHooves
         }
         private void CreateClick(object sender, RoutedEventArgs e)
         {
-            if (PriceBox.Text == "")
+            if (PriceBox.Text == "" || !int.TryParse(PriceBox.Text, out int number))
             {
-                MessageBox.Show("Введите цену");
+                MessageBox.Show("Введите цену в виде числа");
                 return;
             }
-            if (WeightBox.Text == "")
+            if (WeightBox.Text == "" || !int.TryParse(WeightBox.Text, out int numberWei))
             {
-                MessageBox.Show("Введите вес");
+                MessageBox.Show("Введите вес в виде числа");
+                return;
+            }
+            if (CountBox.Text == "" || !int.TryParse(CountBox.Text, out int numberCount))
+            {
+                MessageBox.Show("Введите количество в виде числа");
                 return;
             }
             if (DatePicker.SelectedDate == null)
@@ -109,6 +117,27 @@ namespace DiningRoomHornsHooves
                 LunchProduts = lunchProducts
             });
             this.Close();
+        }
+        private void ReadyListBoxChange(object sender, SelectionChangedEventArgs args)
+        {
+            if (ReadyListBox.SelectedItem != null)
+            {
+                var changeItem = ReadyListBox.SelectedItem;
+                if (!SelectedListBox.Items.Contains(changeItem))
+                {
+                    SelectedListBox.Items.Add(changeItem);
+                }
+                ReadyListBox.SelectedItem = null;
+            }
+        }
+        private void SelectedListBoxChange(object sender, SelectionChangedEventArgs args)
+        {
+            if (SelectedListBox.SelectedItem != null)
+            {
+                int removeIndex = SelectedListBox.SelectedIndex;
+                SelectedListBox.SelectedItem = null;
+                SelectedListBox.Items.RemoveAt(removeIndex);
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ namespace DiningRoomContracts.ViewModels
         override
         public string ToString()
         {
-            return String.Format(@"Id = {0}, Calorie = {1}, Wishes = {2}", Id, Calorie, Wishes);
+            return String.Format(@"Id = {0}, Калорийность = {1}, Пожелания = {2}", Id, Calorie, Wishes);
         }
     }
 }

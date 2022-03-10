@@ -80,8 +80,13 @@ namespace DiningRoomHornsHooves
         }
         private void BindingClick(object sender, RoutedEventArgs e)
         {
-            //BindOrderLunchesWindow bindOrderLunchesWindow = new BindOrderLunchesWindow();
-            //bindOrderLunchesWindow.ShowDialog();
+            BindOrderLunchesWindow bindOrderLunchesWindow = new BindOrderLunchesWindow();
+            bindOrderLunchesWindow.ShowDialog();
+        }
+        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.PropertyType == typeof(System.DateTime))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "dd/MM/yyyy";
         }
     }
 }

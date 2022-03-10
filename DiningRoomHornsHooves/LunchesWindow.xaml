@@ -22,6 +22,6 @@
         <Button Grid.Row="2" Grid.Column="1" Click="DeleteCutleryClick">Удалить</Button>
         <Button Grid.Row="3" Grid.Column="1" Click="UpdateCutleryClick">Изменить</Button>
         <Button Grid.Row="4" Grid.Column="1" Click="BindingClick">Привязка заказов</Button>
-        <DataGrid Name="LunchesData" Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" ColumnWidth="*" IsReadOnly="True"></DataGrid>
+        <DataGrid Name="LunchesData" Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" ColumnWidth="*" IsReadOnly="True" AutoGeneratingColumn="OnAutoGeneratingColumn"></DataGrid>
     </Grid>
 </Window>

@@ -19,7 +19,7 @@ namespace DiningRoomContracts.ViewModels
         override
         public string ToString()
         {
-            return String.Format(@"Id = {0}, Name = {1}, Country = {2}", Id, Name, Country);
+            return String.Format(@"Название = {0}, Происхождение = {1}", Name, Country);
         }
     }
 }

@@ -87,6 +87,7 @@ namespace DiningRoomDatabaseImplement.Implements
         public static ProductViewModel CreateModel(Product product)
         {
             return new ProductViewModel {
+                Id = product.Id,
                 Name = product.Name,
                 Country = product.Country,
                 StorekeeperLogin = product.StorekeeperLogin,

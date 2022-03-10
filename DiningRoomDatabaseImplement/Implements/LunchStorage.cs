@@ -16,7 +16,7 @@ namespace DiningRoomDatabaseImplement.Implements
         public List<LunchViewModel> GetFullList()
         {
             using var context = new DiningRoomDatabase();
-            return context.Lunches.Include(rec => rec.LunchProducts).Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).Select(CreateModel).ToList();
+            return context.Lunches.Include(rec => rec.LunchProducts).Include(rec => rec.LunchOrders).Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).Select(CreateModel).ToList();
         }
         public List<LunchViewModel> GetFilteredList(LunchBindingModel model)
         {
@@ -25,7 +25,7 @@ namespace DiningRoomDatabaseImplement.Implements
                 return null;
             }
             using var context = new DiningRoomDatabase();
-            return context.Lunches.Include(rec => rec.LunchProducts).Where(rec => rec.Id == model.Id && rec.WorkerLogin == WorkerStorage.AutorizedWorker).Select(CreateModel).ToList();
+            return context.Lunches.Include(rec => rec.LunchProducts).Include(rec => rec.LunchOrders).Where(rec => rec.Id == model.Id && rec.WorkerLogin == WorkerStorage.AutorizedWorker).Select(CreateModel).ToList();
         }
         public LunchViewModel GetElement(LunchBindingModel model)
         {
@@ -34,7 +34,7 @@ namespace DiningRoomDatabaseImplement.Implements
                 return null;
             }
             using var context = new DiningRoomDatabase();
-            var lunch = context.Lunches.Include(rec => rec.LunchProducts).Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).FirstOrDefault(rec => rec.Id == model.Id);
+            var lunch = context.Lunches.Include(rec => rec.LunchProducts).Include(rec => rec.LunchOrders).Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).FirstOrDefault(rec => rec.Id == model.Id);
             return lunch != null ? CreateModel(lunch) : null;
         }
         public void Insert(LunchBindingModel model)
@@ -67,7 +67,7 @@ namespace DiningRoomDatabaseImplement.Implements
             using var transaction = context.Database.BeginTransaction();
             try
             {
-                var element = context.Lunches.Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).FirstOrDefault(rec => rec.Id == model.Id);
+                var element = context.Lunches.Include(rec => rec.LunchProducts).Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).FirstOrDefault(rec => rec.Id == model.Id);
                 if (element == null)
                 {
                     throw new Exception("Элемент не найден");
@@ -85,7 +85,7 @@ namespace DiningRoomDatabaseImplement.Implements
         public void Delete(LunchBindingModel model)
         {
             using var context = new DiningRoomDatabase();
-            Lunch element = context.Lunches.Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).FirstOrDefault(rec => rec.Id == model.Id);
+            Lunch element = context.Lunches.Include(rec => rec.LunchProducts).Where(rec => rec.WorkerLogin == WorkerStorage.AutorizedWorker).FirstOrDefault(rec => rec.Id == model.Id);
             if (element != null)
             {
                 context.Lunches.Remove(element);
@@ -102,8 +102,17 @@ namespace DiningRoomDatabaseImplement.Implements
             using var transaction = context.Database.BeginTransaction();
             try
             {
-                context.LunchOrders.Add(new LunchOrders { LunchId = addedOrder.Item1, OrderId = addedOrder.Item2.Item1, OrderCount = addedOrder.Item2.Item2});
+                if (context.LunchOrders.FirstOrDefault(rec => rec.LunchId == addedOrder.Item1 && rec.OrderId == addedOrder.Item2.Item1) != null)
+                {
+                    var lunchOrder = context.LunchOrders.FirstOrDefault(rec => rec.LunchId == addedOrder.Item1 && rec.OrderId == addedOrder.Item2.Item1);
+                    lunchOrder.OrderCount = addedOrder.Item2.Item2;
+                }
+                else
+                {
+                    context.LunchOrders.Add(new LunchOrders { LunchId = addedOrder.Item1, OrderId = addedOrder.Item2.Item1, OrderCount = addedOrder.Item2.Item2 });
+                }
                 context.SaveChanges();
+                transaction.Commit();
             }
             catch
             {
@@ -121,6 +130,7 @@ namespace DiningRoomDatabaseImplement.Implements
                 var lunchProducts = context.LunchProducts.Where(rec => rec.LunchId == model.Id.Value).ToList();
                 context.LunchProducts.RemoveRange(lunchProducts.Where(rec => !model.LunchProduts.ContainsKey(rec.ProductId)).ToList());
                 context.SaveChanges();
+                lunchProducts = context.LunchProducts.Where(rec => rec.LunchId == model.Id.Value).ToList();
                 foreach (var updateProducts in lunchProducts)
                 {
                     updateProducts.ProductCount = model.LunchProduts[updateProducts.ProductId];
