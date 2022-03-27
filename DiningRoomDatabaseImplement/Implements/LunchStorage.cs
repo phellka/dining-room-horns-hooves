@@ -25,7 +25,8 @@ namespace DiningRoomDatabaseImplement.Implements
                 return null;
             }
             using var context = new DiningRoomDatabase();
-            return context.Lunches.Include(rec => rec.LunchProducts).Include(rec => rec.LunchOrders).Where(rec => rec.Id == model.Id && rec.WorkerLogin == WorkerStorage.AutorizedWorker).Select(CreateModel).ToList();
+            return context.Lunches.Include(rec => rec.LunchProducts).Include(rec => rec.LunchOrders).Where(rec => rec.Id == model.Id && rec.WorkerLogin == WorkerStorage.AutorizedWorker ||
+                rec.Date > model.after && rec.Date < model.before && rec.WorkerLogin == WorkerStorage.AutorizedWorker).Select(CreateModel).ToList();
         }
         public LunchViewModel GetElement(LunchBindingModel model)
         {

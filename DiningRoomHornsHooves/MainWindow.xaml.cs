@@ -55,5 +55,11 @@ namespace DiningRoomHornsHooves
             LunchesWindow lunchesWindow = new LunchesWindow();
             lunchesWindow.ShowDialog();
         }
+        private void ReportLunchesClick(object sender, RoutedEventArgs e)
+        {
+            ReportLunchesWindow reportLunchesWindow = new ReportLunchesWindow(
+                new ReportLogic(new LunchStorage(), new CutleryStorage(), new CookStorage(), new ProductStorage()));
+            reportLunchesWindow.ShowDialog();
+        }
     }
 }

@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\w1500_1377754.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -17,6 +21,10 @@
     <ProjectReference Include="..\DiningRoomBusinessLogic\DiningRoomBusinessLogic.csproj" />
     <ProjectReference Include="..\DiningRoomContracts\DiningRoomContracts.csproj" />
     <ProjectReference Include="..\DiningRoomDatabaseImplement\DiningRoomDatabaseImplement.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\w1500_1377754.jpg" />
   </ItemGroup>
 
 </Project>

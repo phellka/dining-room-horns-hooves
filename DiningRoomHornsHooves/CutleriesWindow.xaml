@@ -5,22 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiningRoomHornsHooves"
         mc:Ignorable="d"
-        Title="Столовые приборы" Height="450" Width="800" Loaded="CutleriesWindowLoaded">
+        Title="Столовые приборы" Height="400" Width="600" MinHeight="200" MinWidth="300" Loaded="CutleriesWindowLoaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="1" Grid.Column="1" Click="CreateCutleryClick">Создать</Button>
-        <Button Grid.Row="2" Grid.Column="1" Click="DeleteCutleryClick">Удалить</Button>
-        <Button Grid.Row="3" Grid.Column="1" Click="UpdateCutleryClick">Изменить</Button>
-        <DataGrid Name="CutleriesData" Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" ColumnWidth="*" IsReadOnly="True"></DataGrid>
+        <Button Grid.Row="1" Grid.Column="1" Click="CreateCutleryClick" Margin="10" MinHeight="30" MinWidth="80">Создать</Button>
+        <Button Grid.Row="2" Grid.Column="1" Click="DeleteCutleryClick" Margin="10" MinHeight="30" MinWidth="80">Удалить</Button>
+        <Button Grid.Row="3" Grid.Column="1" Click="UpdateCutleryClick" Margin="10" MinHeight="30" MinWidth="80">Изменить</Button>
+        <DataGrid Name="CutleriesData" Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" ColumnWidth="*" IsReadOnly="True" Margin="10"></DataGrid>
     </Grid>
 </Window>

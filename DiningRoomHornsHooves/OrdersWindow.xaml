@@ -5,22 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiningRoomHornsHooves"
         mc:Ignorable="d"
-        Title="Заказы" Height="450" Width="800" MinHeight="200" MinWidth="200" Loaded="OrderWindowLoaded">
+        Title="Заказы" Height="400" Width="600" MinHeight="250" MinWidth="350" Loaded="OrderWindowLoaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="1" Grid.Column="1" Click="CreateOrderClick">Создать</Button>
-        <Button Grid.Row="2" Grid.Column="1" Click="DeleteOrderClick">Удалить</Button>
-        <Button Grid.Row="3" Grid.Column="1" Click="UpdateOrderClick">Изменить</Button>
-        <DataGrid Name="OrdersData" Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" ColumnWidth="*" IsReadOnly="True"></DataGrid>
+        <Button Grid.Row="1" Grid.Column="1" Click="CreateOrderClick" Margin="10" MinHeight="30" MinWidth="80">Создать</Button>
+        <Button Grid.Row="2" Grid.Column="1" Click="DeleteOrderClick" Margin="10" MinHeight="30" MinWidth="80">Удалить</Button>
+        <Button Grid.Row="3" Grid.Column="1" Click="UpdateOrderClick" Margin="10" MinHeight="30" MinWidth="80">Изменить</Button>
+        <DataGrid Name="OrdersData" Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" ColumnWidth="*" IsReadOnly="True" Margin="10"></DataGrid>
     </Grid>
 </Window>
