@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DiningRoomContracts.BusinessLogicsContracts;
 using DiningRoomContracts.StoragesContracts;
+using DiningRoomContracts.ViewModels;
+using DiningRoomContracts.BindingModels;
+using Microsoft.Win32;
 
 namespace DiningRoomHornsHooves
 {
@@ -45,6 +48,39 @@ namespace DiningRoomHornsHooves
         private void ReportCooksByLanchesWindowLoaded(object sender, RoutedEventArgs e)
         {
             LoadData();
+        }
+        private void ExcelClick(object sender, RoutedEventArgs e)
+        {
+            if (LunchesListBox.SelectedItem != null)
+            {
+                var list = LunchesListBox.SelectedItems.Cast<LunchViewModel>().ToList();
+                var dialog = new SaveFileDialog();
+                dialog.Filter = "xlsx|*.xlsx";
+                if (dialog.ShowDialog() == true) {
+                    reportLogic.saveCooksToExcel(new ReportBindingModel() { FileName = dialog.FileName, lunches = list});
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите обеды", "Ошибка");
+            }
+        }
+        private void WordClick(object sender, RoutedEventArgs e)
+        {
+            if (LunchesListBox.SelectedItem != null)
+            {
+                var list = LunchesListBox.SelectedItems.Cast<LunchViewModel>().ToList();
+                var dialog = new SaveFileDialog();
+                dialog.Filter = "docx|*.docx";
+                if (dialog.ShowDialog() == true)
+                {
+                    reportLogic.saveCooksToWord(new ReportBindingModel() { FileName = dialog.FileName, lunches = list });
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите обеды", "Ошибка");
+            }
         }
     }
 }

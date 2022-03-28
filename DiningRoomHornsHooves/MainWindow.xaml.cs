@@ -59,13 +59,13 @@ namespace DiningRoomHornsHooves
         private void ReportLunchesClick(object sender, RoutedEventArgs e)
         {
             ReportLunchesWindow reportLunchesWindow = new ReportLunchesWindow(
-                new ReportLogic(new LunchStorage(), new CutleryStorage(), new CookStorage(), new ProductStorage(), new SaveToPdf()));
+                new ReportLogic(new LunchStorage(), new CutleryStorage(), new CookStorage(), new ProductStorage(), new SaveToPdf(), new SaveToWord(), new SaveToExcel()));
             reportLunchesWindow.ShowDialog();
         }
         private void ReportCooksbyLunchesClick(object sender, RoutedEventArgs e)
         {
             ReportCooksByLanchesWindow reportCooksByLanchesWindow = new ReportCooksByLanchesWindow(new LunchStorage(), 
-                new ReportLogic(new LunchStorage(), new CutleryStorage(), new CookStorage(), new ProductStorage(), new SaveToPdf()));
+                new ReportLogic(new LunchStorage(), new CutleryStorage(), new CookStorage(), new ProductStorage(), new SaveToPdf(), new SaveToWord(), new SaveToExcel()));
             reportCooksByLanchesWindow.ShowDialog();
         }
     }

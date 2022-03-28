@@ -5,17 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiningRoomHornsHooves"
         mc:Ignorable="d"
-        Title="Программа учета" Height="450" Width="800">
+        Title="Программа учета" Height="450" Width="800" Background="CadetBlue">
     <Grid>
         <Menu Height="25" VerticalAlignment="Top">
             <MenuItem Header="Обеды" Click="LunchesClick"></MenuItem>
             <MenuItem Header="Заказы" Click="OrdersClick"></MenuItem>
             <MenuItem Header="Приборы" Click="CutleriesClick"></MenuItem>
-            <MenuItem Header="Получение списка"></MenuItem>
-            <MenuItem Header="Отчет">
-                <MenuItem Header="Список поваров" Click="ReportCooksbyLunchesClick"></MenuItem>
-                <MenuItem Header="Отчет по обедам" Click="ReportLunchesClick"></MenuItem>
-            </MenuItem>
+            <MenuItem Header="Получение списка" Click="ReportCooksbyLunchesClick"></MenuItem>
+            <MenuItem Header="Отчет" Click="ReportLunchesClick"></MenuItem>
             <MenuItem Header="Прочее">
                 <MenuItem Header="Создание повара" Click="CreateCookClick"></MenuItem>
                 <MenuItem Header="Создание продукта" Click="CreateProductClick"></MenuItem>

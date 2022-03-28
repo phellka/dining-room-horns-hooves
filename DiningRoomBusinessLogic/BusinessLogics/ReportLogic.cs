@@ -20,14 +20,18 @@ namespace DiningRoomBusinessLogic.BusinessLogics
         private readonly ICookStorage cookStorage;
         private readonly IProductStorage productStorage;
         private readonly AbstractSaveToPdf saveToPdf;
+        private readonly AbstractSaveToWord saveToWord;
+        private readonly AbstractSaveToExcel saveToExcel;
         public ReportLogic(ILunchStorage lunchStorage, ICutleryStorage cutleryStorage, ICookStorage cookStorage, IProductStorage productStorage,
-            AbstractSaveToPdf saveToPdf)
+            AbstractSaveToPdf saveToPdf, AbstractSaveToWord saveToWord, AbstractSaveToExcel saveToExcel)
         {
             this.cookStorage = cookStorage;
             this.cutleryStorage = cutleryStorage;
             this.lunchStorage = lunchStorage;
             this.productStorage = productStorage;
             this.saveToPdf = saveToPdf;
+            this.saveToWord = saveToWord;
+            this.saveToExcel = saveToExcel;
         }
         public List<ReportLunchesPCView> GetLunchesPCView(ReportBindingModel model)
         {
@@ -61,7 +65,6 @@ namespace DiningRoomBusinessLogic.BusinessLogics
             }
             return list;
         }
-
         public void saveLunchesToPdfFile(ReportBindingModel model)
         {
             saveToPdf.CreateDoc(new PdfInfo
@@ -71,6 +74,39 @@ namespace DiningRoomBusinessLogic.BusinessLogics
                 DateAfter = model.DateAfter.Value,
                 DateBefore = model.DateBefore.Value,
                 Lunches = GetLunchesPCView(model)
+            });
+        }
+        public List<CookViewModel> GetCooksByLanches(ReportBindingModel model)
+        {
+            var list = new List<CookViewModel>();
+            var listCookIds = new List<int>();
+            foreach (var lunch in model.lunches)
+            {
+                var lunchProducts = lunch.LunchProduts.Keys.ToList().Select(rec => productStorage.GetElement(new ProductBindingModel { Id = rec }));
+                foreach (var elem in lunchProducts)
+                {
+                    listCookIds.AddRange(elem.ProductCooks.Keys.ToList());
+                }
+            }
+            list = listCookIds.Distinct().ToList().Select(rec => cookStorage.GetElement(new CookBindingModel { Id = rec })).ToList();
+            return list;
+        }
+        public void saveCooksToExcel(ReportBindingModel model)
+        {
+            saveToExcel.CreateReport(new ExcelInfo()
+            {
+                FileName = model.FileName,
+                Title = "Список поваров:",
+                Cooks = GetCooksByLanches(model)
+            });
+        }
+        public void saveCooksToWord(ReportBindingModel model)
+        {
+            saveToWord.CreateDoc(new WordInfo()
+            {
+                FileName = model.FileName,
+                Title = "Список поваров",
+                Cooks = GetCooksByLanches(model)
             });
         }
     }

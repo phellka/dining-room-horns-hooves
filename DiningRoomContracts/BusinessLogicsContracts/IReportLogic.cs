@@ -10,7 +10,10 @@ namespace DiningRoomContracts.BusinessLogicsContracts
 {
     public interface IReportLogic
     {
+        List<CookViewModel> GetCooksByLanches(ReportBindingModel model);
         List<ReportLunchesPCView> GetLunchesPCView(ReportBindingModel model);
         void saveLunchesToPdfFile(ReportBindingModel model);
+        void saveCooksToWord(ReportBindingModel model);
+        void saveCooksToExcel(ReportBindingModel model);
     }
 }
