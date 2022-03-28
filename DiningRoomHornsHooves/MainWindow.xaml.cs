@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DiningRoomBusinessLogic.BusinessLogics;
 using DiningRoomDatabaseImplement.Implements;
+using DiningRoomBusinessLogic.OfficePackage.Implements;
 
 namespace DiningRoomHornsHooves
 {
@@ -58,8 +59,14 @@ namespace DiningRoomHornsHooves
         private void ReportLunchesClick(object sender, RoutedEventArgs e)
         {
             ReportLunchesWindow reportLunchesWindow = new ReportLunchesWindow(
-                new ReportLogic(new LunchStorage(), new CutleryStorage(), new CookStorage(), new ProductStorage()));
+                new ReportLogic(new LunchStorage(), new CutleryStorage(), new CookStorage(), new ProductStorage(), new SaveToPdf()));
             reportLunchesWindow.ShowDialog();
+        }
+        private void ReportCooksbyLunchesClick(object sender, RoutedEventArgs e)
+        {
+            ReportCooksByLanchesWindow reportCooksByLanchesWindow = new ReportCooksByLanchesWindow(new LunchStorage(), 
+                new ReportLogic(new LunchStorage(), new CutleryStorage(), new CookStorage(), new ProductStorage(), new SaveToPdf()));
+            reportCooksByLanchesWindow.ShowDialog();
         }
     }
 }

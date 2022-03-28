@@ -13,7 +13,7 @@
             <MenuItem Header="Приборы" Click="CutleriesClick"></MenuItem>
             <MenuItem Header="Получение списка"></MenuItem>
             <MenuItem Header="Отчет">
-                <MenuItem Header="Список поваров"></MenuItem>
+                <MenuItem Header="Список поваров" Click="ReportCooksbyLunchesClick"></MenuItem>
                 <MenuItem Header="Отчет по обедам" Click="ReportLunchesClick"></MenuItem>
             </MenuItem>
             <MenuItem Header="Прочее">

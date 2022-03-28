@@ -11,7 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 using DiningRoomContracts.BusinessLogicsContracts;
+using DiningRoomContracts.BindingModels;
 
 namespace DiningRoomHornsHooves
 {
@@ -26,15 +28,15 @@ namespace DiningRoomHornsHooves
             InitializeComponent();
             this.reportLogic = reportLogic;
             DataGridTextColumn textColumnDate = new DataGridTextColumn();
-            textColumnDate.Header = "Дата создания";
+            textColumnDate.Header = "Дата создания обеда";
             textColumnDate.Binding = new Binding("dateCreate");
             DataGrid.Columns.Add(textColumnDate);
             DataGridTextColumn textColumnWeight = new DataGridTextColumn();
-            textColumnWeight.Header = "Вес";
+            textColumnWeight.Header = "Вес обеда";
             textColumnWeight.Binding = new Binding("weight");
             DataGrid.Columns.Add(textColumnWeight);
             DataGridTextColumn textColumnPrice = new DataGridTextColumn();
-            textColumnPrice.Header = "Цена";
+            textColumnPrice.Header = "Цена обеда";
             textColumnPrice.Binding = new Binding("price");
             DataGrid.Columns.Add(textColumnPrice);
             DataGridTextColumn textColumnCutleryName = new DataGridTextColumn();
@@ -59,6 +61,20 @@ namespace DiningRoomHornsHooves
             public string cutleryCount { get; set; }
             public string cookName { get; set; }
         }
+        private void SendMessageClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SaveFileDialog();
+            dialog.Filter = "pdf|*.pdf";
+            if (dialog.ShowDialog() == true)
+            {
+                reportLogic.saveLunchesToPdfFile(new ReportBindingModel()
+                {
+                    DateAfter = DatePickerAfter.SelectedDate,
+                    DateBefore = DatePickerBefore.SelectedDate,
+                    FileName = dialog.FileName
+                });
+            }
+        }
         private void ShowClick(object sender, RoutedEventArgs e)
         {
             if (DatePickerAfter.SelectedDate == null || DatePickerBefore.SelectedDate == null ||
@@ -69,22 +85,33 @@ namespace DiningRoomHornsHooves
             }
             try
             {
-                var dict = reportLogic.GetLunchesPCView((DateTime)DatePickerAfter.SelectedDate, (DateTime)DatePickerBefore.SelectedDate);
+                var dict = reportLogic.GetLunchesPCView(new ReportBindingModel() { 
+                    DateAfter = DatePickerAfter.SelectedDate,
+                    DateBefore = DatePickerBefore.SelectedDate
+                });
                 if (dict != null)
                 {
                     DataGrid.Items.Clear();
                     foreach (var elem in dict)
                     {
                         DataGrid.Items.Add(new itemLucnh() { 
-                        dateCreate = elem.DateCreate.ToShortDateString(),
-                        weight = elem.Weight.ToString(),
-                        price = elem.price.ToString()});
-                        foreach(var cook in elem.Cooks)
+                            dateCreate = elem.DateCreate.ToShortDateString(),
+                            weight = elem.Weight.ToString(),
+                            price = elem.price.ToString()
+                        });
+                        for (int i = 0; i < Math.Max(elem.Cooks.Count, elem.Cutleries.Count); ++i)
                         {
-                            DataGrid.Items.Add(new itemLucnh()
+                            itemLucnh newItem = new itemLucnh();
+                            if (i < elem.Cooks.Count)
                             {
-                                cookName = cook.Name
-                            });
+                                newItem.cookName = elem.Cooks[i].Name;
+                            }
+                            if (i < elem.Cutleries.Count)
+                            {
+                                newItem.cutleryName = elem.Cutleries[i].Name;
+                                newItem.cutleryCount = elem.Cutleries[i].Count.ToString();
+                            }
+                            DataGrid.Items.Add(newItem);
                         }
                     }
                 }

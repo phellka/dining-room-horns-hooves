@@ -7,6 +7,9 @@ using DiningRoomContracts.BusinessLogicsContracts;
 using DiningRoomContracts.ViewModels;
 using DiningRoomContracts.StoragesContracts;
 using DiningRoomContracts.BindingModels;
+using DiningRoomBusinessLogic.OfficePackage;
+using DiningRoomBusinessLogic.OfficePackage.HelperEnums;
+using DiningRoomBusinessLogic.OfficePackage.HelperModels;
 
 namespace DiningRoomBusinessLogic.BusinessLogics
 {
@@ -16,20 +19,23 @@ namespace DiningRoomBusinessLogic.BusinessLogics
         private readonly ICutleryStorage cutleryStorage;
         private readonly ICookStorage cookStorage;
         private readonly IProductStorage productStorage;
-        public ReportLogic(ILunchStorage lunchStorage, ICutleryStorage cutleryStorage, ICookStorage cookStorage, IProductStorage productStorage)
+        private readonly AbstractSaveToPdf saveToPdf;
+        public ReportLogic(ILunchStorage lunchStorage, ICutleryStorage cutleryStorage, ICookStorage cookStorage, IProductStorage productStorage,
+            AbstractSaveToPdf saveToPdf)
         {
             this.cookStorage = cookStorage;
             this.cutleryStorage = cutleryStorage;
             this.lunchStorage = lunchStorage;
             this.productStorage = productStorage;
+            this.saveToPdf = saveToPdf;
         }
-        public List<ReportLunchesPCView> GetLunchesPCView(DateTime after, DateTime before)
+        public List<ReportLunchesPCView> GetLunchesPCView(ReportBindingModel model)
         {
             var list = new List<ReportLunchesPCView>();
             var lunches = lunchStorage.GetFilteredList(new LunchBindingModel
             {
-                after = after,
-                before = before
+                after = model.DateAfter,
+                before = model.DateBefore
             });
             foreach (var lunch in lunches)
             {
@@ -48,9 +54,24 @@ namespace DiningRoomBusinessLogic.BusinessLogics
                     listCookIds.AddRange(elem.ProductCooks.Keys.ToList());
                 }
                 record.Cooks = listCookIds.Distinct().ToList().Select(rec => cookStorage.GetElement(new CookBindingModel { Id = rec })).ToList();
+                var lunchOrders = lunch.LunchOrders.Keys.ToList();
+                var lunchCutleries = cutleryStorage.GetFullList().Where(rec => lunchOrders.Contains(rec.CulteryOrder)).ToList();
+                record.Cutleries = lunchCutleries;
                 list.Add(record);
             }
             return list;
+        }
+
+        public void saveLunchesToPdfFile(ReportBindingModel model)
+        {
+            saveToPdf.CreateDoc(new PdfInfo
+            {
+                FileName = model.FileName,
+                Title = "Список заказов",
+                DateAfter = model.DateAfter.Value,
+                DateBefore = model.DateBefore.Value,
+                Lunches = GetLunchesPCView(model)
+            });
         }
     }
 }   

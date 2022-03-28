@@ -15,7 +15,7 @@ namespace DiningRoomContracts.BindingModels
         public string WorkerLogin { get; set; }
         public Dictionary<int, int> LunchOrders { get; set; }
         public Dictionary<int, int> LunchProduts { get; set; }
-        public DateTime after { get; set; }
-        public DateTime before { get; set; }
+        public DateTime? after { get; set; }
+        public DateTime? before { get; set; }
     }
 }

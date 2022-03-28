@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\flag-white-versions-3.jpg.opdownload" />
     <None Remove="Images\w1500_1377754.jpg" />
   </ItemGroup>
 
@@ -24,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\flag-white-versions-3.jpg.opdownload" />
     <Resource Include="Images\w1500_1377754.jpg" />
   </ItemGroup>
 
